@@ -1,9 +1,10 @@
 package model
 
-import(
+import (
+	"Zhigui/model/user"
 	"github.com/jinzhu/gorm"
 )
 
-func Migrate(DB *gorm.DB){
-	DB.AutoMigrate(&User{})
+func Migrate(DB *gorm.DB) {
+	DB.AutoMigrate(&user.User{})
 }

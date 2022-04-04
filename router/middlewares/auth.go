@@ -1,4 +1,5 @@
-package middleware
+package middlewares
+
 import (
 	"Zhigui/handler"
 	"Zhigui/pkg/auth"
@@ -18,10 +19,10 @@ func Auth() gin.HandlerFunc {
 		}
 
 		// 跨越中间件取值
-		c.Set("student_id", userClaim.StudentID)
+		c.Set("id", userClaim.StudentID)
 		c.Set("expiresAt", userClaim.StandardClaims)
 
-		c.Next()		
+		c.Next()
 	}
 
 }
