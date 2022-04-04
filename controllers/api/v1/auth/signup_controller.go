@@ -3,10 +3,10 @@ package auth
 
 import (
 	v1 "Zhigui/controllers/api/v1"
+	"Zhigui/handler/response"
 	"Zhigui/model/user"
 	"Zhigui/requests"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 // SignupController 注册控制器
@@ -22,7 +22,7 @@ func (sc *SignupController) IsEmailExist(c *gin.Context) {
 	if ok := requests.Validate(c, &request, requests.SignEmailExist); !ok {
 		return
 	}
-	c.JSONP(http.StatusOK, gin.H{
+	response.JSON(c, gin.H{
 		"exist": user.IsEmailExist(request.Email),
 	})
 }

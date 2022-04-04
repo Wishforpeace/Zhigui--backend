@@ -1,7 +1,7 @@
 package zone
 
 import (
-	"Zhigui/model/task"
+	"Zhigui/model"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +16,6 @@ import (
 // @Failure 400 {object} errno.Errno "{"error_code":"20001","message":"Fail."}or {"error_code":"00002","message":"Lack Param or Param Not Satisfiable."}"
 // @Router /user/colletion [get]
 func GetZones(c *gin.Context) {
-	task := task.Task{}
+	task := model.Task{}
 	task := task.
 }

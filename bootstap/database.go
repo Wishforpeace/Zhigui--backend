@@ -1,7 +1,7 @@
 package bootstrap
 
 import (
-	"Zhigui/model/user"
+	"Zhigui/model"
 	"Zhigui/pkg/config"
 	"Zhigui/pkg/database"
 	"Zhigui/pkg/logger"
@@ -50,5 +50,5 @@ func SetupDB() {
 	// 设置每个链接的过期时间
 	database.SQLDB.SetConnMaxLifetime(time.Duration(config.GetInt("database.mysql.max_life_seconds")) * time.Second)
 
-	database.DB.AutoMigrate(&user.User{})
+	database.DB.AutoMigrate(&model.User{})
 }
