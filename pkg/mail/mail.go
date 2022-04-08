@@ -1,24 +1,44 @@
+// Package mail 发送短信
 package mail
 
 import (
-	"gopkg.in/gomail.v2"
-	_ "gopkg.in/gomail.v2"
+	"Zhigui/pkg/config"
+	"sync"
 )
 
-var (
-	mailer = gomail.NewDialer("smtp.qq.com", 465."1903180340@qq.com", "WYX&wyx20030310"
-)
+type From struct {
+	Address string
+	Name    string
+}
 
-func Send(to, subject, body string) (err error) {
-	m := gomail.NewMessage()
-	m.SetHeader("From", "your@qq.com")
-	m.SetHeader("To", to)
-	m.SetHeader("Subject", subject)
-	m.SetBody("text/html", body)
+type Email struct {
+	From    From
+	To      []string
+	Bcc     []string
+	Cc      []string
+	Subject string
+	Text    []byte // Plaintext message (optional)
+	HTML    []byte // Html message (optional)
+}
 
-	if err = mailer.DialAndSend(m); err != nil {
-		logger.LogError(err)
-	}
+type Mailer struct {
+	Driver Driver
+}
 
-	return err
+var once sync.Once
+var internalMailer *Mailer
+
+// NewMailer 单例模式获取
+func NewMailer() *Mailer {
+	once.Do(func() {
+		internalMailer = &Mailer{
+			Driver: &SMTP{},
+		}
+	})
+
+	return internalMailer
+}
+
+func (mailer *Mailer) Send(email Email) bool {
+	return mailer.Driver.Send(email, config.GetStringMapString("mail.smtp"))
 }
